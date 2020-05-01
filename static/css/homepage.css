@@ -1,3 +1,9 @@
-.MainHeading{
+.centered{
+	text-align:center;
+}
 
+#TodoList{
+	text-align:left;
+	width:75%;
+	margin:auto;
 }
