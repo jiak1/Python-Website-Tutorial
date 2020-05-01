@@ -1,9 +1,9 @@
-from flask import Flask,render_template
+from flask import Flask
 
 app = Flask(__name__)
 
 @app.route("/") #Create a page on the first url
 def homePage():
-	return render_template("homepage.html")
-	
+	return "Hello World!"
+
 app.run(host="0.0.0.0")
