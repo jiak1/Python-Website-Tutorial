@@ -8,7 +8,6 @@ def create_app():
 	app = Flask(__name__,static_url_path="", static_folder="static")
 	app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://jackdbusername:dbpassword@"+os.getenv('JACK_HOST')+"/jackflaskproject"
 	
-	
 	db.init_app(app)
 	
 	with app.app_context():
