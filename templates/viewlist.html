@@ -14,8 +14,8 @@
 			<h1 class="MainHeading">{{todolist.name}}</h1>
 			<p>Add some things to your list!</p>
 
-			<input placeholder="Add an item to your todo list!">
-			<button class="btn btn-success ml-4">Add Item</button>
+			<input placeholder="Add an item to your todo list!" id="NewItemInput">
+			<button class="btn btn-success ml-4" id="AddItem">Add Item</button>
 			
 			<ul id="TodoList">
 				{% for item in todolist.items %}
@@ -23,5 +23,11 @@
 				{% endfor %}
 			</ul>
 		</div>
+		<script>
+			$("#AddItem").click(function(){
+				var NewItemDescription = $("#NewItemInput").val()
+				window.location.href="{{url_for('routes.addItem',listid=todolist.id,item='')}}"+NewItemDescription
+			})
+		</script>
 	</body>
 </html>
