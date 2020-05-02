@@ -15,7 +15,7 @@
 
 			<ul id="TodoList">
 				{% for item in todolists %}
-					<li><a href="#">{{item.name}}</a></li>
+					<li><a href="{{url_for('routes.viewList',listid=item.id)}}">{{item.name}}</a></li>
 				{% endfor %}
 			</ul>
 

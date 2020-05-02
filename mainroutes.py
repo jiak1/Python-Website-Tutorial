@@ -17,12 +17,11 @@ def addList():
 	db.session.commit()
 	return redirect(url_for('routes.showLists'))
 
-@routes.route('/')
-def index():
-	items = [
-		"Cook Dinner",
-		"Wash Up",
-		"Do Laundry",
-		"Clean Room"
-	]
-	return render_template("homepage.html",todolist=items)
+@routes.route('/list/<listid>')
+def viewList(listid):
+	if(listid is None):
+		return "ERROR"
+	list = TodoList.query.filter_by(id=listid).first()
+	if(list is None):
+		return "ERROR"
+	return render_template("viewlist.html",todolist=list)
