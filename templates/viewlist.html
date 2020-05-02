@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Edit List</title>
-		
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+{% extends 'base.html' %}
+{% set active_page = "viewlist" %}
 
-		<link rel="stylesheet" href="{{ url_for('static',filename='css/homepage.css') }}">
-	</head>
-	<body>
+{% block head %}
+		<title>Edit List</title>
+
+		<link rel="stylesheet" href="{{ url_for('static',filename='css/viewlist.css') }}">
+{% endblock %}
+
+{% block body %}
 		<div class="container-sm mt-4 centered">
 			<h1 class="MainHeading">{{todolist.name}}</h1>
 			<p>Add some things to your list!</p>
@@ -19,7 +17,15 @@
 			
 			<ul id="TodoList">
 				{% for item in todolist.items %}
-					<li>{{item.description}}</li>
+					<li>
+						<div class="item-value" id="{{item.id}}">{{item.description}}</div>
+
+						<div style="display:none" class="edit-item" id="EDIT-{{item.id}}">
+							<input id="INPUT-{{item.id}}" class="todo-item" value="">
+							<button id="SAVE-{{item.id}}" class="btn btn-primary">Save</button>
+							<button id="CANCEL-{{item.id}}" class="btn btn-danger">Cancel</button>
+						</div>
+					</li>
 				{% endfor %}
 			</ul>
 		</div>
@@ -28,6 +34,39 @@
 				var NewItemDescription = $("#NewItemInput").val()
 				window.location.href="{{url_for('routes.addItem',listid=todolist.id,item='')}}"+NewItemDescription
 			})
+
+			$(".item-value").click(function(){
+				
+				$(".edit-item").css({"display":"none"})
+				$(".item-value").css({"display":"inline-block"})
+
+				var itemDescriptionEle = $(this)
+				var itemNum = itemDescriptionEle.attr('id')
+				var itemChangeEle = $("#INPUT-"+itemNum)
+
+				itemDescriptionEle.css({"display":"none"})
+				itemChangeEle.val(itemDescriptionEle.text())
+
+				$("#EDIT-"+itemNum).css({"display":"inline-block"})
+
+				$("#CANCEL-"+itemNum).click({num:itemNum},closeEdit)
+				$("#SAVE-"+itemNum).click({num:itemNum},saveEdit)
+			})
+
+			function closeEdit(event){
+				var itemNum = event.data.num
+
+				$("#EDIT-"+itemNum).css({"display":"none"})
+				$("#"+itemNum).css({"display":"inline-block"})
+			}
+
+			function saveEdit(event){
+				var itemNum = event.data.num
+				var newValue = $("#INPUT-"+itemNum).val()
+
+				$("#EDIT-"+itemNum).css({"display":"none"})
+				$("#"+itemNum).text(newValue)
+				$("#"+itemNum).css({"display":"inline-block"})
+			}
 		</script>
-	</body>
-</html>
+{% endblock %}
