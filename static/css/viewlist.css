@@ -5,9 +5,14 @@
 #TodoList{
 	text-align:left;
 	width:75%;
+	margin-top:20px !important;
 	margin:auto;
 }
 
 .todo-item{
 	width:100%;
+}
+
+.btn-primary,.btn-danger{
+	margin-left:10px;
 }
