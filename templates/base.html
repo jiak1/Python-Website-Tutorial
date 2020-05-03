@@ -18,7 +18,7 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNavaltMarkup">
 		<div class="navbar-nav">
-			<a class="nav-item nav-link {{ 'active' if active_page == 'home' }}" href="#">Home</a>
+			<a class="nav-item nav-link {{ 'active' if active_page == 'home' }}" href="{{url_for('routes.home')}}">Home</a>
 
 			{% if current_user.is_anonymous == false %}
 			<a class="nav-item nav-link {{ 'active' if active_page == 'lists' }}" href="/lists">View Lists</a>

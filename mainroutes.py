@@ -10,6 +10,10 @@ routes = Blueprint('routes', __name__)
 def load_account(id):
 	return Account.query.get(int(id))
 
+@routes.route('/')
+def home():
+	return render_template('home.html')
+
 @routes.route('/logout')
 def logout():
 	logout_user()

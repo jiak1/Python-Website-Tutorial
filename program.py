@@ -9,7 +9,7 @@ login.login_view = "routes.login"
 
 def create_app():
 	app = Flask(__name__,static_url_path="", static_folder="static")
-	app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://jackdbusername:dbpassword@remotemysql.com/jackflaskproject"
+	app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://jackdbusername:dbpassword@"+os.getenv('JACK_HOST')+"/jackflaskproject"
 	app.secret_key = "A Very Secret Key That Nobody Will Guess"
 
 	db.init_app(app)
