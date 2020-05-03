@@ -1,4 +1,4 @@
-from flask import render_template,Blueprint,redirect,url_for,abort
+from flask import render_template,Blueprint,redirect,url_for,abort,jsonify
 from models import TodoList,TodoItem
 from program import db
 
@@ -38,3 +38,15 @@ def addItem(listid,item):
 	db.session.add(newItem)
 	db.session.commit()
 	return redirect(url_for("routes.viewList",listid=listid))
+
+@routes.route('/API/editItem/<itemID>/<newValue>')
+def editItem(itemID,newValue):
+	if(itemID is None or newValue is None):
+		return jsonify(success=False)
+	item = TodoItem.query.filter_by(id=itemID).first()
+	if(item is None):
+		return jsonify(success=False)
+	#Item exists and we are ready to change
+	item.description = newValue
+	db.session.commit()
+	return jsonify(success=True)

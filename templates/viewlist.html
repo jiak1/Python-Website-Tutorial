@@ -64,9 +64,16 @@
 				var itemNum = event.data.num
 				var newValue = $("#INPUT-"+itemNum).val()
 
-				$("#EDIT-"+itemNum).css({"display":"none"})
-				$("#"+itemNum).text(newValue)
-				$("#"+itemNum).css({"display":"inline-block"})
+				$.get("/API/editItem/"+itemNum+"/"+newValue,
+				function(data){
+					//Runs when the request is completed
+					$("#EDIT-"+itemNum).css({"display":"none"})
+					$("#"+itemNum).text(newValue)
+					$("#"+itemNum).css({"display":"inline-block"})
+				}).fail(function(){
+					alert("error")
+				})
+
 			}
 		</script>
 {% endblock %}
