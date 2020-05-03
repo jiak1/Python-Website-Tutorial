@@ -1,16 +1,50 @@
-from flask import render_template,Blueprint,redirect,url_for,abort,jsonify
-from models import TodoList,TodoItem
-from program import db
+from flask import render_template,Blueprint,redirect,url_for,abort,jsonify,flash
+from models import TodoList,TodoItem,Account
+from program import db,login
+from flask_login import current_user, login_user
+from forms import RegisterForm,LoginForm
 
 routes = Blueprint('routes', __name__)
 
-@routes.route('/register')
-def register():
-	return render_template('register.html')
+@login.user_loader
+def load_account(id):
+	return Account.query.get(int(id))
 
-@routes.route('/login')
+@routes.route('/register',methods=['GET','POST'])
+def register():
+	if(current_user.is_authenticated):
+		return redirect(url_for('routes.showLists'))
+	form = RegisterForm()
+	if(form.validate_on_submit()):
+		#someone is trying to register an account
+		user = Account(username = form.username.data,email=form.email.data)
+		user.set_password(form.password.data)
+		db.session.add(user)
+		db.session.commit()
+		flash("Successfully created your Account!","success")
+		return redirect(url_for('routes.login'))
+	else:
+		for problem in form.errors:
+			flash(form.errors[problem][0],"danger")
+	return render_template('register.html',form=form)
+
+@routes.route('/login',methods=['GET','POST'])
 def login():
-	return render_template('login.html')
+	if(current_user.is_authenticated):
+		return redirect(url_for('routes.showLists'))
+	form = LoginForm()
+	if(form.validate_on_submit()):
+		user = Account.query.filter_by(username=form.username.data).first()
+		if(user is None or not user.check_password(form.password.data)):
+			flash("Invalid username or password","danger")
+			return redirect(url_for('routes.login'))
+		login_user(user,remember=True)
+		return redirect(url_for('routes.showLists'))
+	else:
+		for problem in form.errors:
+			flash(form.errors[problem][0],"danger")
+
+	return render_template('login.html',form=form)
 
 @routes.route('/lists')
 def showLists():

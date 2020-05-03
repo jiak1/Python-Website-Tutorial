@@ -7,7 +7,9 @@
 
 {% block body %}
 <div class="container-sm mt-4">
+	{% include 'notify.html' %}
 	<form method="post">
+		{{ form.hidden_tag() }}
 		<div class="text-center mb-4">
 			<h1 class="h3 mb-3 font-weight-normal">Login To Your Account</h1>
 		</div>

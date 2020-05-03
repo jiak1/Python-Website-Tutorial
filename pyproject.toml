@@ -9,6 +9,10 @@ python = "^3.8"
 Flask = "^1.1"
 flask-sqlalchemy = "^2.4"
 PyMySQL = "^0.9.3"
+flask-wtf = "^0.14.3"
+wtforms = "^2.3"
+flask-login = "^0.5.0"
+email-validator = "^1.1"
 
 [tool.poetry.dev-dependencies]
 
