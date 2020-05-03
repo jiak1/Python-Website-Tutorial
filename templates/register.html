@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% set active_page = "register" %}
+
+{% block head %}
+<title>Register</title>
+{% endblock %}
+
+{% block body %}
+<div class="container-sm mt-4">
+	<form method="post">
+		<div class="text-center mb-4">
+			<h1 class="h3 mb-3 font-weight-normal">Create an Account</h1>
+		</div>
+
+		<div class="form-group">
+			<label for="username">Username</label>
+			<input type="text" class="form-control" required autofocus="" placeholder="Username" id="username" name="username">
+		</div>
+
+		<div class="form-group">
+			<label for="email">Email</label>
+			<input type="email" id="email" name="email" class="form-control" placeholder="Email Address" required>
+		</div>
+
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input type="password" class="form-control" required placeholder="Password" id="password" name="password" onchange="if(this.checkValidity()) form.password2.pattern = this.value;">
+		</div>
+
+		<div class="form-group">
+			<label for="password">Repeat Password</label>
+			<input type="password" class="form-control" required placeholder="Repeat Password" id="password2" name="password2" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');">
+		</div>
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" id="submit">Register</button>
+
+		<p class="text-muted text-center mt-5 mb-3">Already have an account? <a href="{{url_for('routes.login')}}">Login here.</a></p>
+	</form>
+</div>
+{% endblock %}

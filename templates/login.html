@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% set active_page = "login" %}
+
+{% block head %}
+<title>Login</title>
+{% endblock %}
+
+{% block body %}
+<div class="container-sm mt-4">
+	<form method="post">
+		<div class="text-center mb-4">
+			<h1 class="h3 mb-3 font-weight-normal">Login To Your Account</h1>
+		</div>
+
+		<div class="form-group">
+			<label for="username">Username</label>
+			<input type="text" class="form-control" required autofocus="" placeholder="Username" id="username" name="username">
+		</div>
+
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input type="password" class="form-control" required placeholder="Password" id="password" name="password">
+		</div>
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" id="submit">Login</button>
+
+		<p class="text-muted text-center mt-5 mb-3">Don't have an account? <a href="{{url_for('routes.register')}}">Register here.</a></p>
+	</form>
+</div>
+{% endblock %}

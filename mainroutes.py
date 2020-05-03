@@ -4,6 +4,14 @@ from program import db
 
 routes = Blueprint('routes', __name__)
 
+@routes.route('/register')
+def register():
+	return render_template('register.html')
+
+@routes.route('/login')
+def login():
+	return render_template('login.html')
+
 @routes.route('/lists')
 def showLists():
 	lists = TodoList.query.all()
